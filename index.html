@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중등과학 계산기</title>
+    <link rel="icon" href="계산기.png" type="image/png">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e, #ffdde1, #fc6076, #ff9a9e, #b721ff);
+            background-size: 200% 200%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .calculator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+        .calculator .display {
+            width: calc(100% - 20px);
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-align: right;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .calculator button {
+            width: 20%;
+            padding: 15px;
+            margin: 5px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 10px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .calculator button.operator {
+            background-color: #ff9500;
+            color: white;
+        }
+        .calculator button.equals {
+            background-color: #ff9500;
+            color: white;
+            width: calc(40% + 10px);
+        }
+        .calculator button.clear {
+            background-color: #ff3b30;
+            color: white;
+            width: calc(40% + 10px);
+        }
+        .calculator button:hover {
+            background-color: #d4d4d4;
+        }
+        .calculator button:active {
+            transform: scale(1.1);
+            background-color: #b4b4b4;
+        }
+        .calculator button:hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 80%);
+            transform: translate(-50%, -50%);
+            animation: explode 0.6s ease-out;
+        }
+        @keyframes explode {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <br>
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+        <br>
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
+        <br>
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
+        <br>
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendDot()">.</button>
+        <button class="equals" onclick="calculate()">=</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
+        <button class="clear" onclick="clearDisplay()">Clear</button>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendNumber(number) {
+            display.value += number;
+        }
+
+        function appendOperator(operator) {
+            display.value += ' ' + operator + ' ';
+        }
+
+        function appendDot() {
+            display.value += '.';
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
